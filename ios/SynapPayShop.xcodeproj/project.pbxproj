@@ -15,6 +15,11 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2DC0D65F253ABD27005AF7A4 /* SynapPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0D65E253ABD27005AF7A4 /* SynapPay.framework */; };
+		2DC0D660253ABD27005AF7A4 /* SynapPay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0D65E253ABD27005AF7A4 /* SynapPay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2DC0D670253ABDD4005AF7A4 /* SynapPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0D66F253ABDD4005AF7A4 /* SynapPayView.swift */; };
+		2DC0D675253ABF41005AF7A4 /* SynapPayViewBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0D674253ABF41005AF7A4 /* SynapPayViewBridge.m */; };
+		2DC0D680253AC047005AF7A4 /* SynapPayViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0D67F253AC047005AF7A4 /* SynapPayViewManager.swift */; };
 		2DCD954D1E0B4F2C00145EB5 /* SynapPayShopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SynapPayShopTests.m */; };
 		3F9CB7C9BDD276903F590091 /* libPods-SynapPayShop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEEAEF0D950480841962A21 /* libPods-SynapPayShop.a */; };
 		7C6054CFFE33F9AC91D03928 /* libPods-SynapPayShop-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F70FB6F61B21E62E6E1716 /* libPods-SynapPayShop-tvOS.a */; };
@@ -39,6 +44,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2DC0D661253ABD27005AF7A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2DC0D660253ABD27005AF7A4 /* SynapPay.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* SynapPayShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SynapPayShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +72,12 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SynapPayShop/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* SynapPayShop-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SynapPayShop-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* SynapPayShop-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SynapPayShop-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DC0D65E253ABD27005AF7A4 /* SynapPay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SynapPay.framework; sourceTree = "<group>"; };
+		2DC0D66F253ABDD4005AF7A4 /* SynapPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynapPayView.swift; sourceTree = "<group>"; };
+		2DC0D674253ABF41005AF7A4 /* SynapPayViewBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SynapPayViewBridge.m; sourceTree = "<group>"; };
+		2DC0D67E253AC008005AF7A4 /* SynapPayViewBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SynapPayViewBridge.h; sourceTree = "<group>"; };
+		2DC0D67F253AC047005AF7A4 /* SynapPayViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynapPayViewManager.swift; sourceTree = "<group>"; };
+		2DC0D687253C0247005AF7A4 /* SynapPayShop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SynapPayShop-Bridging-Header.h"; sourceTree = "<group>"; };
 		37C6C80D880941E9EA683929 /* Pods-SynapPayShop-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SynapPayShop-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-SynapPayShop-tvOSTests/Pods-SynapPayShop-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4CEEAEF0D950480841962A21 /* libPods-SynapPayShop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SynapPayShop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7B10A3B710B040C95D5C8E /* Pods-SynapPayShop-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SynapPayShop-tvOS.release.xcconfig"; path = "Target Support Files/Pods-SynapPayShop-tvOS/Pods-SynapPayShop-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F9CB7C9BDD276903F590091 /* libPods-SynapPayShop.a in Frameworks */,
+				2DC0D65F253ABD27005AF7A4 /* SynapPay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +151,7 @@
 		13B07FAE1A68108700A75B9A /* SynapPayShop */ = {
 			isa = PBXGroup;
 			children = (
+				2DC0D65B253ABC2B005AF7A4 /* Bridge */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -139,6 +166,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2DC0D65E253ABD27005AF7A4 /* SynapPay.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				4CEEAEF0D950480841962A21 /* libPods-SynapPayShop.a */,
@@ -147,6 +175,34 @@
 				01C37E918AFE2A39797E110B /* libPods-SynapPayShop-tvOSTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DC0D65B253ABC2B005AF7A4 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0D65D253ABC3F005AF7A4 /* View */,
+				2DC0D65C253ABC36005AF7A4 /* UIManager */,
+				2DC0D674253ABF41005AF7A4 /* SynapPayViewBridge.m */,
+				2DC0D67E253AC008005AF7A4 /* SynapPayViewBridge.h */,
+				2DC0D687253C0247005AF7A4 /* SynapPayShop-Bridging-Header.h */,
+			);
+			name = Bridge;
+			sourceTree = "<group>";
+		};
+		2DC0D65C253ABC36005AF7A4 /* UIManager */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0D67F253AC047005AF7A4 /* SynapPayViewManager.swift */,
+			);
+			name = UIManager;
+			sourceTree = "<group>";
+		};
+		2DC0D65D253ABC3F005AF7A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0D66F253ABDD4005AF7A4 /* SynapPayView.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		37BDE2FFFAA0915E2A51E741 /* Pods */ = {
@@ -161,7 +217,6 @@
 				E20E507B621DC91AD9E4555D /* Pods-SynapPayShop-tvOSTests.debug.xcconfig */,
 				37C6C80D880941E9EA683929 /* Pods-SynapPayShop-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -232,6 +287,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				A5720F4E844B0264CFF6442F /* [CP] Copy Pods Resources */,
+				2DC0D661253ABD27005AF7A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -294,7 +350,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1200;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -568,8 +624,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DC0D675253ABF41005AF7A4 /* SynapPayViewBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				2DC0D680253AC047005AF7A4 /* SynapPayViewManager.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				2DC0D670253ABDD4005AF7A4 /* SynapPayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +669,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D59137BEBB8F11C600194B7F /* Pods-SynapPayShop-SynapPayShopTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -633,6 +693,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A268626A636DBE854B8E7DD /* Pods-SynapPayShop-SynapPayShopTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = SynapPayShopTests/Info.plist;
@@ -657,6 +718,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SynapPayShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -666,6 +731,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SynapPayShop;
+				SWIFT_OBJC_BRIDGING_HEADER = "SynapPayShop-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -679,6 +745,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SynapPayShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -688,6 +758,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SynapPayShop;
+				SWIFT_OBJC_BRIDGING_HEADER = "SynapPayShop-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
