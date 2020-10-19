@@ -37,6 +37,7 @@ export default class PaymentView extends Component {
       UIManager.SynapPayView.Commands.create,
       [],
     );
+    
   }
 
   _onCreateEnd() {

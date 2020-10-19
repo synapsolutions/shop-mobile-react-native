@@ -4,7 +4,8 @@ import {requireNativeComponent, ViewPropTypes} from 'react-native';
 var viewProps = {
   name: 'SynapPayView',
   propTypes: {
-    afterCreate: PropTypes.func,
+    onCreateEnd: PropTypes.func,
+    onConfigureEnd: PropTypes.func,
     onError: PropTypes.func,
     ...ViewPropTypes,
   }

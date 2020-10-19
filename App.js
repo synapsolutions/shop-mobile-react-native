@@ -22,14 +22,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPaymentStarted: true,
+      isPaymentStarted: false,
       signature: '',
     };
   }
 
   async startPayment() {
     this.setState({
-      isPaymentStarted: false,
+      isPaymentStarted: true,
     });
     const transactionObject = OrderRepository.getTransaction();
     const transaction = JSON.stringify(transactionObject);
@@ -90,13 +90,13 @@ class App extends Component {
           <View
             style={[
               styles.paymentContainer,
-              this.state.isPaymentStarted && styles.hide,
+              !this.state.isPaymentStarted && styles.hide,
             ]}>
             <PaymentView ref="paymentView"></PaymentView>
           </View>
         </View>
         <View
-          style={[styles.footer, this.state.isPaymentStarted && styles.hide]}>
+          style={[styles.footer, !this.state.isPaymentStarted && styles.hide]}>
           <TouchableOpacity
             style={[styles.buttonPrimary]}
             onPress={() => this.pay()}>
