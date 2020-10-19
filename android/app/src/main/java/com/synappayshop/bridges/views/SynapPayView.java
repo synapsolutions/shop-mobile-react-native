@@ -1,17 +1,12 @@
-package com.synappayshop.bridge.view;
+package com.synappayshop.bridge.views;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
@@ -27,7 +22,7 @@ import com.synap.pay.util.json.JSONDecoder;
 import com.synap.pay.util.json.JSONEncoder;
 
 public class SynapPayView extends ConstraintLayout {
-    private ViewGroup containerView;
+
     private SynapPayButton payButton;
     private String themeName;
     private String environmentName;

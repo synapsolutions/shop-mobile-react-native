@@ -1,31 +1,21 @@
-package com.synappayshop.bridge.uimanager;
-
-import android.graphics.Color;
-import android.widget.LinearLayout;
+package com.synappayshop.bridge.uimanagers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.infer.annotation.Assertions;
-import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.views.image.ReactImageView;
-import com.synap.pay.model.payment.SynapTransaction;
-import com.synap.pay.util.json.JSONDecoder;
-import com.synappayshop.bridge.view.SynapPayView;
+import com.synappayshop.bridge.views.SynapPayView;
 
 import java.util.Map;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
     private static final String RCT_MODULE_NAME = "SynapPayView";
+
     public static final int COMMAND_CREATE = 1;//"create";
     public static final int COMMAND_CREATE_WITH_BANKS = 2;//"createWithBanks";
     public static final int COMMAND_CONFIGURE = 3;//"configure";
