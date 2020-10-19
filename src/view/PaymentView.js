@@ -47,12 +47,12 @@ export default class PaymentView extends Component {
   _onConfigureEnd() {}
 
   _onPaySuccess(event: Event) {
-    const response = event.nativeEvent.message;
+    const response = event.nativeEvent.response;
     this.onSuccess(response);
   }
 
   _onPayFailed(event: Event) {
-    const response = event.nativeEvent.message;
+    const response = event.nativeEvent.response;
     this.onFailed(response);
   }
 
@@ -87,16 +87,16 @@ export default class PaymentView extends Component {
         signature={this.state.signature}
         transaction={this.state.transaction}
         environmentName="SANDBOX"
-        onCreateEnd={() => {
+        onCreateCompleted={() => {
           this._onCreateEnd();
         }}
-        onConfigureEnd={() => {
+        onConfigureCompleted={() => {
           this._onConfigureEnd();
         }}
         onPaySuccess={(event: Event) => {
           this._onPaySuccess(event);
         }}
-        onPayFailed={(event: Event) => {
+        onPayFail={(event: Event) => {
           this._onPayFailed(event);
         }}
         onError={this._onError}></SynapPayView>

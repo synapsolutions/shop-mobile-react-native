@@ -1,16 +1,16 @@
-package com.synappayshop.bridge.commands;
+package com.synappayshop.bridges.commands;
 
-public class SynapPayViewCommand {
+public enum SynapPayViewCommand {
 
-    public static final SynapPayViewCommand CREATE = new SynapPayViewCommand(1, "create");
-    public static final SynapPayViewCommand CREATE_WITH_BANKS = new SynapPayViewCommand(2, "createWithBanks");
-    public static final SynapPayViewCommand CONFIGURE = new SynapPayViewCommand(3, "configure");
-    public static final SynapPayViewCommand PAY = new SynapPayViewCommand(4, "pay");
+    CREATE(1, "create"),
+    CREATE_WITH_BANKS(2, "createWithBanks"),
+    CONFIGURE(3, "configure"),
+    PAY(4, "pay");
 
     private int id;
     private String name;
 
-    public SynapPayViewCommand(int id, String name) {
+    SynapPayViewCommand(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -19,15 +19,8 @@ public class SynapPayViewCommand {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

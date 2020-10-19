@@ -46,10 +46,12 @@ class App extends Component {
       signature,
       transaction,
       onSuccess: (response: string) => {
-        Alert.alert('onSuccess...' + response);
+        const jsonResponse=JSON.parse(response);
+        Alert.alert('onSuccess: ' + jsonResponse.message.text);
       },
       onFailed: (response: string) => {
-        Alert.alert('onFailed...' + response);
+        const jsonResponse=JSON.parse(response);
+        Alert.alert('onFailed: ' + jsonResponse.message.text);
       },
     });
   }

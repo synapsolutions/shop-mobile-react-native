@@ -9,7 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.synappayshop.bridge.SynapPayViewPackage;
+import com.synappayshop.bridges.packages.SynapPayViewPackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;

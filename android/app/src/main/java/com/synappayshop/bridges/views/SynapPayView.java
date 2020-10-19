@@ -1,4 +1,4 @@
-package com.synappayshop.bridge.views;
+package com.synappayshop.bridges.views;
 
 import android.content.Context;
 import android.view.View;
@@ -20,6 +20,7 @@ import com.synap.pay.theming.SynapLightTheme;
 import com.synap.pay.theming.SynapTheme;
 import com.synap.pay.util.json.JSONDecoder;
 import com.synap.pay.util.json.JSONEncoder;
+import com.synappayshop.bridges.events.SynapPayViewEvent;
 
 public class SynapPayView extends ConstraintLayout {
 
@@ -64,6 +65,7 @@ public class SynapPayView extends ConstraintLayout {
     public void create() {
         String message = "OK";
         try {
+            this.notifyEvent(SynapPayViewEvent.CREATE_STARTED, message);
             SynapTheme theme = new SynapLightTheme();
             if ("dark".equals(this.themeName)) {
                 theme = new SynapDarkTheme();
@@ -87,15 +89,16 @@ public class SynapPayView extends ConstraintLayout {
             }
             this.payButton = SynapPayButton.create(this);
             this.refreshLayout(this);
-            this.dispatchOnCreateEnd(message);
+            this.notifyEvent(SynapPayViewEvent.CREATE_COMPLETED, message);
         } catch (Exception e) {
-            this.dispatchOnError(e.getMessage());
+            this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
         }
     }
 
     public void configure() {
         String message = "OK";
         try {
+            this.notifyEvent(SynapPayViewEvent.CONFIGURE_STARTED, message);
             if (this.identifier == null) {
                 throw new RuntimeException("[identifier] es requerido");
             }
@@ -117,19 +120,21 @@ public class SynapPayView extends ConstraintLayout {
                         @Override
                         public void success(SynapAuthorizeResponse response) {
                             String responseString = JSONEncoder.encode(response);
-                            dispatchOnPaySuccess(responseString);
+                            notifyEvent(SynapPayViewEvent.PAY_SUCCESS, responseString);
+                            notifyEvent(SynapPayViewEvent.PAY_COMPLETED, "OK");
                         }
 
                         @Override
                         public void failed(SynapAuthorizeResponse response) {
                             String responseString = JSONEncoder.encode(response);
-                            dispatchOnPayFailed(responseString);
+                            notifyEvent(SynapPayViewEvent.PAY_FAIL, responseString);
+                            notifyEvent(SynapPayViewEvent.PAY_COMPLETED, "FAIL");
                         }
                     });
             this.refreshLayout(this);
-            this.dispatchOnConfigureEnd(message);
+            this.notifyEvent(SynapPayViewEvent.CONFIGURE_COMPLETED, message);
         } catch (Exception e) {
-            this.dispatchOnError(e.getMessage());
+            this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
         }
     }
 
@@ -141,38 +146,28 @@ public class SynapPayView extends ConstraintLayout {
     }
 
     public void pay() {
-        this.payButton.pay();
-        this.refreshLayout(this);
+        try {
+            notifyEvent(SynapPayViewEvent.PAY_STARTED, "OK");
+            this.payButton.pay();
+            this.refreshLayout(this);
+        } catch (Exception e) {
+            this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
+        }
     }
 
-
-    private void dispatchOnCreateEnd(String message) {
-        this.notifyEvent("onCreateEnd", message);
-    }
-
-    private void dispatchOnError(String errorMessage) {
-        this.notifyEvent("onError", errorMessage);
-    }
-
-    private void dispatchOnConfigureEnd(String message) {
-        this.notifyEvent("onConfigureEnd", message);
-    }
-
-    private void dispatchOnPaySuccess(String message) {
-        this.notifyEvent("onPaySuccess", message);
-    }
-
-    private void dispatchOnPayFailed(String message) {
-        this.notifyEvent("onPayFailed", message);
-    }
-
-    private void notifyEvent(String eventName, String message) {
-        WritableMap event = Arguments.createMap();
-        event.putString("message", message);
+    private void notifyEvent(SynapPayViewEvent event, String... values) {
+        if (event.getParameters().size() != values.length) {
+            throw new RuntimeException("Invalid parameter values size for event notify");
+        }
+        WritableMap eventMap = Arguments.createMap();
+        for (int i = 0; i < event.getParameters().size(); i++) {
+            String parameter = event.getParameters().get(i);
+            eventMap.putString(parameter, values[i]);
+        }
         ReactContext reactContext = (ReactContext) getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
                 getId(),
-                eventName,
-                event);
+                event.getName(),
+                eventMap);
     }
 }

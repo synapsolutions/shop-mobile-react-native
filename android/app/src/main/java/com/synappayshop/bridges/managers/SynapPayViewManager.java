@@ -1,25 +1,45 @@
-package com.synappayshop.bridge.uimanagers;
+package com.synappayshop.bridges.managers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.infer.annotation.Assertions;
+import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
+import com.facebook.react.shell.MainReactPackage;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.synappayshop.bridge.views.SynapPayView;
+import com.synappayshop.bridges.commands.SynapPayViewCommand;
+import com.synappayshop.bridges.events.SynapPayViewEvent;
+import com.synappayshop.bridges.packages.SynapPayViewPackage;
+import com.synappayshop.bridges.views.SynapPayView;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
     private static final String RCT_MODULE_NAME = "SynapPayView";
-
-    public static final int COMMAND_CREATE = 1;//"create";
-    public static final int COMMAND_CREATE_WITH_BANKS = 2;//"createWithBanks";
-    public static final int COMMAND_CONFIGURE = 3;//"configure";
-    public static final int COMMAND_PAY = 4;//"pay";
+    private static final List<SynapPayViewCommand> COMMANDS = Arrays.asList(
+            SynapPayViewCommand.CREATE,
+            SynapPayViewCommand.CREATE_WITH_BANKS,
+            SynapPayViewCommand.CONFIGURE,
+            SynapPayViewCommand.PAY
+    );
+    private static final List<SynapPayViewEvent> EVENTS = Arrays.asList(
+            SynapPayViewEvent.CREATE_STARTED,
+            SynapPayViewEvent.CREATE_COMPLETED,
+            SynapPayViewEvent.CONFIGURE_STARTED,
+            SynapPayViewEvent.CONFIGURE_COMPLETED,
+            SynapPayViewEvent.PAY_STARTED,
+            SynapPayViewEvent.PAY_SUCCESS,
+            SynapPayViewEvent.PAY_FAIL,
+            SynapPayViewEvent.PAY_COMPLETED,
+            SynapPayViewEvent.ERROR
+    );
 
     @NonNull
     @Override
@@ -66,16 +86,11 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
     @Nullable
     @Override
     public Map<String, Integer> getCommandsMap() {
-        return MapBuilder.of(
-                "create",
-                COMMAND_CREATE,
-                "createWithBanks",
-                COMMAND_CREATE_WITH_BANKS,
-                "configure",
-                COMMAND_CONFIGURE,
-                "pay",
-                COMMAND_PAY
-        );
+        Map<String, Integer> commandsMap = new HashMap<>();
+        for (SynapPayViewCommand command : COMMANDS) {
+            commandsMap.put(command.getName(), command.getId());
+        }
+        return commandsMap;
     }
 
     @Override
@@ -84,39 +99,40 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
             int commandId,
             @Nullable ReadableArray args) {
         Assertions.assertNotNull(view);
+        SynapPayViewCommand calledCommand = null;
+        for (SynapPayViewCommand command : COMMANDS) {
+            if (command.getId() == commandId) {
+                calledCommand = command;
+                break;
+            }
+        }
+        if (calledCommand == null) {
+            throw new IllegalArgumentException(String.format(
+                    "Unsupported command %d received by %s.",
+                    commandId,
+                    getClass().getSimpleName()));
+        }
 
-        switch (commandId) {
-            case COMMAND_CREATE:
+        switch (calledCommand) {
+            case CREATE:
                 this.create(view);
                 break;
-            case COMMAND_CONFIGURE:
+            case CONFIGURE:
                 this.configure(view);
                 break;
-            case COMMAND_PAY:
+            case PAY:
                 this.pay(view);
                 break;
-            default:
-                throw new IllegalArgumentException(String.format(
-                        "Unsupported command %d received by %s.",
-                        commandId,
-                        getClass().getSimpleName()));
         }
     }
 
     @Override
     public Map getExportedCustomDirectEventTypeConstants() {
-        return MapBuilder.of(
-                "onCreateEnd",
-                MapBuilder.of("registrationName", "onCreateEnd"),
-                "onError",
-                MapBuilder.of("registrationName", "onError"),
-                "onConfigureEnd",
-                MapBuilder.of("registrationName", "onConfigureEnd"),
-                "onPaySuccess",
-                MapBuilder.of("registrationName", "onPaySuccess"),
-                "onPayFailed",
-                MapBuilder.of("registrationName", "onPayFailed")
-        );
+        Map commandsMap = new HashMap<>();
+        for (SynapPayViewEvent event : EVENTS) {
+            commandsMap.put(event.getName(), MapBuilder.of("registrationName", event.getName()));
+        }
+        return commandsMap;
     }
 
     private void create(SynapPayView synapPayView) {

@@ -1,11 +1,11 @@
-package com.synappayshop.bridge;
+package com.synappayshop.bridges.packages;
 
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
-import com.synappayshop.bridge.uimanagers.SynapPayViewManager;
+import com.synappayshop.bridges.managers.SynapPayViewManager;
 
 import java.util.Collections;
 import java.util.List;
