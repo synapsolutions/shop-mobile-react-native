@@ -38,33 +38,13 @@ public class SynapPayView extends ConstraintLayout {
         this.setLayoutParams(layoutParams);
     }
 
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
-    }
-
-    public void setEnvironmentName(String environmentName) {
-        this.environmentName = environmentName;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
-    public void setOnBehalf(String onBehalf) {
-        this.onBehalf = onBehalf;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public void setTransaction(String transaction) {
-        this.transaction = JSONDecoder.decode(SynapTransaction.class, transaction);
-    }
-
-    public void create() {
+    public void create(String themeName, String environmentName) {
         String message = "OK";
         try {
+            this.themeName = themeName;
+            this.environmentName = environmentName;
+            this.notifyEvent(SynapPayViewEvent.LOG, "themeName" + this.themeName);
+            this.notifyEvent(SynapPayViewEvent.LOG, "environmentName" + this.environmentName);
             this.notifyEvent(SynapPayViewEvent.CREATE_STARTED, message);
             SynapTheme theme = new SynapLightTheme();
             if ("dark".equals(this.themeName)) {
@@ -85,6 +65,9 @@ public class SynapPayView extends ConstraintLayout {
                     case "LOCAL":
                         SynapPayButton.setEnvironment(SynapPayButton.Environment.LOCAL);
                         break;
+                    default:
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.PRODUCTION);
+                        break;
                 }
             }
             this.payButton = SynapPayButton.create(this);
@@ -95,9 +78,18 @@ public class SynapPayView extends ConstraintLayout {
         }
     }
 
-    public void configure() {
+    public void configure(String identifier, String onBehalf, String signature, String transaction) {
         String message = "OK";
         try {
+            this.identifier = identifier;
+            this.onBehalf = onBehalf;
+            this.signature = signature;
+            this.transaction = JSONDecoder.decode(SynapTransaction.class, transaction);
+            this.notifyEvent(SynapPayViewEvent.LOG, "identifier" + this.identifier);
+            this.notifyEvent(SynapPayViewEvent.LOG, "onBehalf" + this.onBehalf);
+            this.notifyEvent(SynapPayViewEvent.LOG, "signature" + this.signature);
+            this.notifyEvent(SynapPayViewEvent.LOG, "transaction" + transaction);
+
             this.notifyEvent(SynapPayViewEvent.CONFIGURE_STARTED, message);
             if (this.identifier == null) {
                 throw new RuntimeException("[identifier] es requerido");

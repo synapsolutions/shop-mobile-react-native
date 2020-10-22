@@ -38,7 +38,8 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
             SynapPayViewEvent.PAY_SUCCESS,
             SynapPayViewEvent.PAY_FAIL,
             SynapPayViewEvent.PAY_COMPLETED,
-            SynapPayViewEvent.ERROR
+            SynapPayViewEvent.ERROR,
+            SynapPayViewEvent.LOG
     );
 
     @NonNull
@@ -51,36 +52,6 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
     @Override
     protected SynapPayView createViewInstance(@NonNull ThemedReactContext reactContext) {
         return new SynapPayView(reactContext);
-    }
-
-    @ReactProp(name = "themeName")
-    public void setThemeName(SynapPayView synapPayView, String themeName) {
-        synapPayView.setThemeName(themeName);
-    }
-
-    @ReactProp(name = "environmentName")
-    public void setEnvironmentName(SynapPayView synapPayView, String environmentName) {
-        synapPayView.setEnvironmentName(environmentName);
-    }
-
-    @ReactProp(name = "identifier")
-    public void setIdentifier(SynapPayView synapPayView, String identifier) {
-        synapPayView.setIdentifier(identifier);
-    }
-
-    @ReactProp(name = "onBehalf")
-    public void setOnBehalf(SynapPayView synapPayView, String onBehalf) {
-        synapPayView.setOnBehalf(onBehalf);
-    }
-
-    @ReactProp(name = "signature")
-    public void setSignature(SynapPayView synapPayView, String signature) {
-        synapPayView.setSignature(signature);
-    }
-
-    @ReactProp(name = "transaction")
-    public void setTransaction(SynapPayView synapPayView, String transaction) {
-        synapPayView.setTransaction(transaction);
     }
 
     @Nullable
@@ -115,10 +86,16 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
 
         switch (calledCommand) {
             case CREATE:
-                this.create(view);
+                String themeName = args.getString(0);
+                String environmentName = args.getString(1);
+                this.create(view, themeName, environmentName);
                 break;
             case CONFIGURE:
-                this.configure(view);
+                String identifier = args.getString(0);
+                String onBehalf = args.getString(1);
+                String signature = args.getString(2);
+                String transaction = args.getString(3);
+                this.configure(view, identifier, onBehalf, signature, transaction);
                 break;
             case PAY:
                 this.pay(view);
@@ -135,12 +112,12 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
         return commandsMap;
     }
 
-    private void create(SynapPayView synapPayView) {
-        synapPayView.create();
+    private void create(SynapPayView synapPayView, String themeName, String environmentName) {
+        synapPayView.create(themeName, environmentName);
     }
 
-    private void configure(SynapPayView synapPayView) {
-        synapPayView.configure();
+    private void configure(SynapPayView synapPayView, String identifier, String onBehalf, String signature, String transaction) {
+        synapPayView.configure(identifier, onBehalf, signature, transaction);
     }
 
 

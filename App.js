@@ -94,7 +94,7 @@ class App extends Component {
               styles.paymentContainer,
               !this.state.isPaymentStarted && styles.hide,
             ]}>
-            <PaymentView ref="paymentView"></PaymentView>
+            <PaymentView ref="paymentView" themeName="dark"></PaymentView>
           </View>
         </View>
         <View

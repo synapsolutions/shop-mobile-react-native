@@ -16,7 +16,8 @@ public enum SynapPayViewEvent {
     PAY_FAIL("onPayFail","response"),
     PAY_COMPLETED("onPayCompleted","message"),
 
-    ERROR("onError","message");
+    ERROR("onError","message"),
+    LOG("onLog","message");
 
     private String name;
     private List<String> parameters;
