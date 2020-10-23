@@ -49,7 +49,7 @@ class SynapPayView : UIView {
       SynapPayButton.setTheme(SynapDarkTheme())
     }
     
-    switch self.environmentName {
+    switch self.environmentName.uppercased() {
     case "SANDBOX":
       SynapPayButton.setEnvironment(.sandbox)
     case "DEVELOPMENT":
@@ -89,9 +89,11 @@ class SynapPayView : UIView {
     self.notityEvent(self.onConfigureStarted, "message", "OK");
     
     var authenticator = SynapAuthenticator();
-    authenticator.identifier = identifier
-    authenticator.onBehalf = onBehalf
-    authenticator.signature = signature
+    authenticator.identifier = self.identifier
+    if(onBehalf != ""){
+      authenticator.onBehalf = self.onBehalf
+    }
+    authenticator.signature = self.signature
     self.payButton.configure(
       authenticator: authenticator,
       transaction: self.transaction,

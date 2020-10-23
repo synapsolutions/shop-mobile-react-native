@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.synap.pay.SynapPayButton;
+import com.synap.pay.handler.EventHandler;
 import com.synap.pay.handler.payment.SynapAuthorizeHandler;
 import com.synap.pay.model.payment.SynapTransaction;
 import com.synap.pay.model.payment.response.SynapAuthorizeResponse;
@@ -39,43 +40,11 @@ public class SynapPayView extends ConstraintLayout {
     }
 
     public void create(String themeName, String environmentName) {
-        String message = "OK";
-        try {
-            this.themeName = themeName;
-            this.environmentName = environmentName;
-            this.notifyEvent(SynapPayViewEvent.LOG, "themeName" + this.themeName);
-            this.notifyEvent(SynapPayViewEvent.LOG, "environmentName" + this.environmentName);
-            this.notifyEvent(SynapPayViewEvent.CREATE_STARTED, message);
-            SynapTheme theme = new SynapLightTheme();
-            if ("dark".equals(this.themeName)) {
-                theme = new SynapDarkTheme();
-            }
-            SynapPayButton.setTheme(theme);
-            if (this.environmentName != null) {
-                switch (this.environmentName) {
-                    case "SANDBOX":
-                        SynapPayButton.setEnvironment(SynapPayButton.Environment.SANDBOX);
-                        break;
-                    case "DEVELOPMENT":
-                        SynapPayButton.setEnvironment(SynapPayButton.Environment.DEVELOPMENT);
-                        break;
-                    case "PRODUCTION":
-                        SynapPayButton.setEnvironment(SynapPayButton.Environment.PRODUCTION);
-                        break;
-                    case "LOCAL":
-                        SynapPayButton.setEnvironment(SynapPayButton.Environment.LOCAL);
-                        break;
-                    default:
-                        SynapPayButton.setEnvironment(SynapPayButton.Environment.PRODUCTION);
-                        break;
-                }
-            }
-            this.payButton = SynapPayButton.create(this);
-            this.refreshLayout(this);
-            this.notifyEvent(SynapPayViewEvent.CREATE_COMPLETED, message);
-        } catch (Exception e) {
-            this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
-        }
+        this.createWidget(themeName, environmentName, Boolean.FALSE);
+    }
+
+    public void createWithBanks(String themeName, String environmentName) {
+        this.createWidget(themeName, environmentName, Boolean.TRUE);
     }
 
     public void configure(String identifier, String onBehalf, String signature, String transaction) {
@@ -102,7 +71,9 @@ public class SynapPayView extends ConstraintLayout {
             }
             SynapAuthenticator authenticator = new SynapAuthenticator();
             authenticator.setIdentifier(this.identifier);
-            authenticator.setOnBehalf(this.onBehalf);
+            if(this.onBehalf!=null && !this.onBehalf.equals("")){
+                authenticator.setOnBehalf(this.onBehalf);
+            }
             authenticator.setSignature(this.signature);
             this.refreshLayout(this);
             this.payButton.configure(
@@ -130,6 +101,69 @@ public class SynapPayView extends ConstraintLayout {
         }
     }
 
+    private void createWidget(String themeName, String environmentName, Boolean withBanks) {
+        try {
+            this.themeName = themeName;
+            this.environmentName = environmentName;
+            this.notifyEvent(SynapPayViewEvent.LOG, "themeName" + this.themeName);
+            this.notifyEvent(SynapPayViewEvent.LOG, "environmentName" + this.environmentName);
+            this.notifyEvent(SynapPayViewEvent.CREATE_STARTED, "OK");
+            SynapTheme theme = new SynapLightTheme();
+            if ("dark".equals(this.themeName)) {
+                theme = new SynapDarkTheme();
+            }
+            SynapPayButton.setTheme(theme);
+            if (this.environmentName != null) {
+                switch (this.environmentName.toUpperCase()) {
+                    case "SANDBOX":
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.SANDBOX);
+                        break;
+                    case "DEVELOPMENT":
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.DEVELOPMENT);
+                        break;
+                    case "PRODUCTION":
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.PRODUCTION);
+                        break;
+                    case "LOCAL":
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.LOCAL);
+                        break;
+                    default:
+                        SynapPayButton.setEnvironment(SynapPayButton.Environment.PRODUCTION);
+                        break;
+                }
+            }
+
+            SynapPayButton.setListener(new EventHandler() {
+                @Override
+                public void onEvent(SynapPayButton.Events event) {
+
+                    switch (event) {
+                        case START_PAY:
+                            notifyEvent(SynapPayViewEvent.PAY_STARTED, "OK");
+                            break;
+                        case INVALID_CARD_FORM:
+                            notifyEvent(SynapPayViewEvent.FORM_INVALID, "FormInvalid");
+                            break;
+                        case VALID_CARD_FORM:
+                            notifyEvent(SynapPayViewEvent.FORM_VALID, "OK");
+                            break;
+                    }
+                }
+            });
+
+            if (withBanks) {
+                this.payButton = SynapPayButton.createWithBanks(this);
+            } else {
+                this.payButton = SynapPayButton.create(this);
+            }
+
+            this.refreshLayout(this);
+            this.notifyEvent(SynapPayViewEvent.CREATE_COMPLETED, "OK");
+        } catch (Exception e) {
+            this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
+        }
+    }
+
     private void refreshLayout(View view) {
         view.measure(
                 View.MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
@@ -139,7 +173,6 @@ public class SynapPayView extends ConstraintLayout {
 
     public void pay() {
         try {
-            notifyEvent(SynapPayViewEvent.PAY_STARTED, "OK");
             this.payButton.pay();
             this.refreshLayout(this);
         } catch (Exception e) {

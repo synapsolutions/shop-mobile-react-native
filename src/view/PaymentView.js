@@ -77,8 +77,6 @@ export default class PaymentView extends Component {
     console.log('onLog: ' + event.nativeEvent.message);
   }
 
-  createWithBanks() {}
-
   configure() {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this.refs.synapPayView),

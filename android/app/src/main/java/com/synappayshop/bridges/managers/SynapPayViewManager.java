@@ -35,6 +35,8 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
             SynapPayViewEvent.CONFIGURE_STARTED,
             SynapPayViewEvent.CONFIGURE_COMPLETED,
             SynapPayViewEvent.PAY_STARTED,
+            SynapPayViewEvent.FORM_INVALID,
+            SynapPayViewEvent.FORM_VALID,
             SynapPayViewEvent.PAY_SUCCESS,
             SynapPayViewEvent.PAY_FAIL,
             SynapPayViewEvent.PAY_COMPLETED,
@@ -86,16 +88,27 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
 
         switch (calledCommand) {
             case CREATE:
-                String themeName = args.getString(0);
-                String environmentName = args.getString(1);
-                this.create(view, themeName, environmentName);
+                this.create(
+                    view,
+                    args.getString(0),
+                    args.getString(1)
+                );
+                break;
+            case CREATE_WITH_BANKS:
+                this.createWithBanks(
+                    view,
+                    args.getString(0),
+                    args.getString(1)
+                );
                 break;
             case CONFIGURE:
-                String identifier = args.getString(0);
-                String onBehalf = args.getString(1);
-                String signature = args.getString(2);
-                String transaction = args.getString(3);
-                this.configure(view, identifier, onBehalf, signature, transaction);
+                this.configure(
+                    view,
+                    args.getString(0),
+                    args.getString(1),
+                    args.getString(2),
+                    args.getString(3)
+                );
                 break;
             case PAY:
                 this.pay(view);
@@ -114,6 +127,10 @@ public class SynapPayViewManager extends SimpleViewManager<SynapPayView> {
 
     private void create(SynapPayView synapPayView, String themeName, String environmentName) {
         synapPayView.create(themeName, environmentName);
+    }
+
+    private void createWithBanks(SynapPayView synapPayView, String themeName, String environmentName) {
+        synapPayView.createWithBanks(themeName, environmentName);
     }
 
     private void configure(SynapPayView synapPayView, String identifier, String onBehalf, String signature, String transaction) {

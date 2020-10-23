@@ -12,6 +12,8 @@ public enum SynapPayViewEvent {
     CONFIGURE_COMPLETED("onConfigureCompleted","message"),
 
     PAY_STARTED("onPayStarted","message"),
+    FORM_INVALID("onFormInvalid","message"),
+    FORM_VALID("onFormValid","message"),
     PAY_SUCCESS("onPaySuccess","response"),
     PAY_FAIL("onPayFail","response"),
     PAY_COMPLETED("onPayCompleted","message"),

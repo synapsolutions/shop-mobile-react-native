@@ -46,11 +46,11 @@ class App extends Component {
       signature,
       transaction,
       onSuccess: (response: string) => {
-        const jsonResponse=JSON.parse(response);
+        const jsonResponse = JSON.parse(response);
         Alert.alert('onSuccess: ' + jsonResponse.message.text);
       },
       onFailed: (response: string) => {
-        const jsonResponse=JSON.parse(response);
+        const jsonResponse = JSON.parse(response);
         Alert.alert('onFailed: ' + jsonResponse.message.text);
       },
     });
@@ -67,11 +67,16 @@ class App extends Component {
 
     const rawSignature =
       identifier + orderNumber + currencyCode + amount + signatureKey;
+    console.log('rawSignature: ' + rawSignature);
+
     const response = await fetch(
-      'https://api.hashify.net/hash/sha512/hex?value=' + rawSignature,
+      'https://api.hashify.net/hash/sha512/hex?value=' + encodeURIComponent(rawSignature),
     );
+
     const json = await response.json();
-    return json.Digest;
+    const hash = json.Digest;
+    console.log('hash:' + hash);
+    return hash;
   }
 
   pay() {
@@ -94,7 +99,10 @@ class App extends Component {
               styles.paymentContainer,
               !this.state.isPaymentStarted && styles.hide,
             ]}>
-            <PaymentView ref="paymentView" themeName="dark"></PaymentView>
+            <PaymentView
+              ref="paymentView"
+              themeName="dark"
+              environmentName="SANDBOX"></PaymentView>
           </View>
         </View>
         <View
