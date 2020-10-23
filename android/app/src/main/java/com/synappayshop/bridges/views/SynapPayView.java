@@ -75,7 +75,7 @@ public class SynapPayView extends ConstraintLayout {
                 authenticator.setOnBehalf(this.onBehalf);
             }
             authenticator.setSignature(this.signature);
-            this.refreshLayout(this);
+            this.refreshLayout();
             this.payButton.configure(
                     authenticator,
                     this.transaction,
@@ -94,7 +94,7 @@ public class SynapPayView extends ConstraintLayout {
                             notifyEvent(SynapPayViewEvent.PAY_COMPLETED, "FAIL");
                         }
                     });
-            this.refreshLayout(this);
+            this.refreshLayout();
             this.notifyEvent(SynapPayViewEvent.CONFIGURE_COMPLETED, message);
         } catch (Exception e) {
             this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
@@ -147,6 +147,9 @@ public class SynapPayView extends ConstraintLayout {
                         case VALID_CARD_FORM:
                             notifyEvent(SynapPayViewEvent.FORM_VALID, "OK");
                             break;
+                        case CARDSTORAGE_LOADED:
+                            refreshLayout();
+                            break;
                     }
                 }
             });
@@ -157,14 +160,15 @@ public class SynapPayView extends ConstraintLayout {
                 this.payButton = SynapPayButton.create(this);
             }
 
-            this.refreshLayout(this);
+            this.refreshLayout();
             this.notifyEvent(SynapPayViewEvent.CREATE_COMPLETED, "OK");
         } catch (Exception e) {
             this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
         }
     }
 
-    private void refreshLayout(View view) {
+    private void refreshLayout() {
+        View view=this;
         view.measure(
                 View.MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(view.getMeasuredHeight(), View.MeasureSpec.EXACTLY));
@@ -174,7 +178,7 @@ public class SynapPayView extends ConstraintLayout {
     public void pay() {
         try {
             this.payButton.pay();
-            this.refreshLayout(this);
+            this.refreshLayout();
         } catch (Exception e) {
             this.notifyEvent(SynapPayViewEvent.ERROR, e.getMessage());
         }

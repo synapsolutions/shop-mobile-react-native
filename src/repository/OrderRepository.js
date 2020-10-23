@@ -42,6 +42,11 @@ export default class OrderRepository {
           },
         ],
       },
+      features: {
+        cardStorage:{
+          userIdentifier:'javier.perez@synapsolutions.com'
+        }
+      },
       settings: {
         brands: ['VISA', 'MSCD'],
         language: 'es_PE',
